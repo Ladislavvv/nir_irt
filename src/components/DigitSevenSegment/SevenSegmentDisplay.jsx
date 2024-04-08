@@ -6,7 +6,7 @@ function SevenSegmentDisplay(props) {
   const [numArr, setNumArr] = React.useState(['0', '0', '0', '0']);
   const millivolts = props.millivolts - 4;
   const temperatura = convertMillivoltsToCelsius(millivolts);
-  const howManyBits = 1;
+  const howManyBits = props.howManyBits;
 
   React.useEffect(() => {
     // console.log(temperatura)
@@ -32,7 +32,7 @@ function SevenSegmentDisplay(props) {
       setNumArr(ttt)
       // console.log(ttt);
     }
-  }, [temperatura]);
+  }, [temperatura, howManyBits]);
 
   function formatData(arr, bits, howManyBits) {
     // console.log(arr, bits, howManyBits);

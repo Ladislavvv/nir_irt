@@ -5,6 +5,7 @@ import {MillivoltsContext} from '../../App'
 
 function Irt() {
   const [pressedKeys, setPressedKeys] = React.useState({});
+  const [howManyBits, setHowManyBits] = React.useState(1);
 
   const millivolts = React.useContext(MillivoltsContext);
 
@@ -31,9 +32,12 @@ function Irt() {
       // console.log('Нажата клавиша S')
       // Здесь можно вызвать функцию, которая должна выполниться при нажатии A
     } else if (pressedKeys['a'] || pressedKeys['ф']) {
+      setHowManyBits((howManyBits > 0) ? (howManyBits - 1) : 0)
       // console.log('Нажата клавиша A');
       // Здесь можно вызвать функцию, которая должна выполниться при нажатии A
     } else if (pressedKeys['d'] || pressedKeys['в']) {
+      // setHowManyBits((howManyBits < 3) ? (howManyBits + 1) : 3)
+      setHowManyBits(howManyBits + 1)
       // console.log('Нажата клавиша D');
       // Здесь можно вызвать функцию, которая должна выполниться при нажатии D
     } else if (pressedKeys['Enter']) {
@@ -44,7 +48,7 @@ function Irt() {
 
   const handleClick = (event) => {
     const id = event.currentTarget.id;
-    console.log(id);
+    // console.log(id);
   };
 
   return (
@@ -61,7 +65,7 @@ function Irt() {
             K3 <span className={styles.lamp}></span>
           </li>
         </ul>
-        <SevenSegmentDisplay millivolts={millivolts} />
+        <SevenSegmentDisplay millivolts={millivolts} howManyBits={howManyBits} />
         {/* <div className={styles.main_ciferblat}>
           <p>8888</p>
         </div> */}
