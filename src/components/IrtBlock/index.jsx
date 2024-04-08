@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styles from './Irt.module.scss';
 import SevenSegmentDisplay from '../DigitSevenSegment/SevenSegmentDisplay';
+import {MillivoltsContext} from '../../App'
 
 function Irt() {
   const [pressedKeys, setPressedKeys] = React.useState({});
+
+  const millivolts = React.useContext(MillivoltsContext);
 
   const handleKeyDown = (event) => {
     setPressedKeys((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: true }));
@@ -13,7 +16,7 @@ function Irt() {
     setPressedKeys((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: false }));
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
 
@@ -23,7 +26,7 @@ function Irt() {
     };
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (pressedKeys['s'] || pressedKeys['ы']) {
       // console.log('Нажата клавиша S')
       // Здесь можно вызвать функцию, которая должна выполниться при нажатии A
@@ -58,7 +61,7 @@ function Irt() {
             K3 <span className={styles.lamp}></span>
           </li>
         </ul>
-        <SevenSegmentDisplay />
+        <SevenSegmentDisplay millivolts={millivolts} />
         {/* <div className={styles.main_ciferblat}>
           <p>8888</p>
         </div> */}

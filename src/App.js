@@ -11,13 +11,17 @@ export const MillivoltsContext = React.createContext('');
 function App() {
   const [millivolts, setMillivolts] = React.useState('');
 
+  // React.useEffect(() => {
+  //   console.log('App.js:mV=', millivolts);
+  // }, [millivolts]);
+
   return (
     <MillivoltsContext.Provider value={millivolts}>
       <div className="App">
         <div className="wrapper">
           <SideBar />
           <IrtBLock />
-          <Termopara />
+          <Termopara setMillivolts={setMillivolts} />
         </div>
       </div>
     </MillivoltsContext.Provider>
