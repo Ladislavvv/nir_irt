@@ -6,10 +6,10 @@ import IrtBLock from './components/IrtBlock';
 import SideBar from './components/sideBarBlock';
 import Termopara from './components/Termopara/Termopara';
 
-export const MillivoltsContext = React.createContext('');
+export const MillivoltsContext = React.createContext();
 
 function App() {
-  const [millivolts, setMillivolts] = React.useState('');
+  const [millivolts, setMillivolts] = React.useState(4);
 
   // React.useEffect(() => {
   //   console.log('App.js:mV=', millivolts);

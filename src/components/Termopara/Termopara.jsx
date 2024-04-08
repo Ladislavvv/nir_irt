@@ -1,12 +1,8 @@
 import React from 'react';
 import './style.scss';
-import {MillivoltsContext} from '../../App'
 
 function Termopara({setMillivolts}) {
-  const [temperature, setTemperature] = React.useState('');
-  // const [query, setQuery] = React.useState("");
-  // const [millivolts, setMillivolts] = React.useState('');
-  const millivolts = React.useContext(MillivoltsContext);
+  const [temperature, setTemperature] = React.useState('')
 
   const handleTemperatureChange = (event) => {
     const celsius = event.target.value;

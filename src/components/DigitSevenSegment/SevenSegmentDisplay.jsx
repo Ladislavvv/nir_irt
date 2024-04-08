@@ -6,7 +6,7 @@ function SevenSegmentDisplay(props) {
   const [numArr, setNumArr] = React.useState(['0', '0', '0', '0']);
   const millivolts = props.millivolts - 4;
   const temperatura = convertMillivoltsToCelsius(millivolts);
-  const howManyBits = 0;
+  const howManyBits = 1;
 
   React.useEffect(() => {
     // console.log(temperatura)
@@ -27,49 +27,15 @@ function SevenSegmentDisplay(props) {
       // Выводит числа полсе точки
       const bits = getFractionalPart(temperatura).split('');
       let ttt = [];
+      // console.log(result, bits, howManyBits);
       ttt = formatData(result, bits, howManyBits);
       setNumArr(ttt)
-      console.log(ttt);
-
-      // result =
-      // console.log(result);
-      // result = ttt.join('').substring(0, ttt.length - (-1))
-      // for (let i = 0; i < 4; i++) {
-      //   result.push(ttt[i])
-      // }
-      // console.log(result)
-
-      // if ( bits.length < howManyBits){
-      //   for (let i=0; i < (howManyBits - bits.length); i++){
-      //     bits.push('0');
-      //   }
-      // }
-      // if (result.length + howManyBits < 4) {
-      //   // const zeroCount = 4 - (result.length + howManyBits);
-      //   // console.log(`\"${result}\" - \"${bits}\" - \"${howManyBits}\"`);
-      //   result = addFloatAfterDot(result, bits, howManyBits);
-      //   // console.log(result);
-      //   if (result.length < 4) {
-      //     result = addZeroCounts(result);
-      //   }
-      //   // for (let i = 0; i < howManyBits; i++) {
-      //   //   result.push(bits[i]);
-      //   // }
-      //   // console.log('result after', result);
-      //   setNumArr(result);
-      // }
-      // else if (result.length + howManyBits === 4) {
-      //   const zeroCount = 4 - (result.length + howManyBits);
-      //   for (let i = 0; i < zeroCount; i++) {
-      //     result.push(bits[i]);
-      //   }
-      //   // result[-1] = `${result[-1]}.`;
-      // }
+      // console.log(ttt);
     }
   }, [temperatura]);
 
   function formatData(arr, bits, howManyBits) {
-    console.log(arr, bits, howManyBits);
+    // console.log(arr, bits, howManyBits);
     let newArr = [...arr];
     for (let i = 0; i < howManyBits; i++) {
       newArr.push(bits[i]);
@@ -126,7 +92,3 @@ function SevenSegmentDisplay(props) {
 }
 
 export default SevenSegmentDisplay;
-
-// result = temperatura.substring(0, dotIndex).split('');
-// const tmp = result[result.length - 1];
-// result[result.length - 1] = `${tmp}.`;
