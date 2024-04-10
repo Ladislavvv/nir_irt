@@ -10,6 +10,7 @@ export const MillivoltsContext = React.createContext();
 
 function App() {
   const [millivolts, setMillivolts] = React.useState(4);
+  const [isConnected, setIsConnected] = React.useState(true);
 
   // React.useEffect(() => {
   //   console.log('App.js:mV=', millivolts);
@@ -20,8 +21,12 @@ function App() {
       <div className="App">
         <div className="wrapper">
           <SideBar />
-          <IrtBLock />
-          <Termopara setMillivolts={setMillivolts} />
+          <IrtBLock isConnected={isConnected} />
+          <Termopara
+            setMillivolts={setMillivolts}
+            isConnected={isConnected}
+            setIsConnected={setIsConnected}
+          />
         </div>
       </div>
     </MillivoltsContext.Provider>

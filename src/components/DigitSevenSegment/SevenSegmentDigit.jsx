@@ -4,6 +4,7 @@ import './style.scss';
 function SevenSegmentDigit(props) {
   const [segments, setSegments] = React.useState([]);
   const numStr = props.value || '';
+  const displaySize = props.displaySize;
 
   const segmentMap = new Map([
     ['0', ['a', 'b', 'c', 'd', 'e', 'f']],
@@ -38,39 +39,12 @@ function SevenSegmentDigit(props) {
 
   return (
     <div className="digit">
-      {/* <div className="parent">
-        <div id="a" className="div1  active-red">
-          a
-        </div>
-        <div id="f" className="div2 active-green">
-          f
-        </div>
-        <div id="g" className="div3">
-          g
-        </div>
-        <div id="e" className="div4">
-          e
-        </div>
-        <div id="c" className="div5">
-          c
-        </div>
-        <div id="d" className="div6">
-          d
-        </div>
-        <div id="b" className="div7">
-          b
-        </div>
-        <div id="dot" className="div8">
-          .
-        </div>
-      </div> */}
-
-      <div className="parent">
+      <div className={`parent${displaySize == 'small' ? '-small' : ''}`}>
         {['a', 'f', 'g', 'e', 'c', 'd', 'b', 'dot'].map((segment, i) => (
           <div
             key={segment}
             id={segment}
-            className={`div${segment === 'dot' ? '8' : i+1} ${
+            className={`div${segment === 'dot' ? '8' : i+1}${displaySize === 'small' ? '-small' : ''} ${
               segments.includes(segment) ? 'active-red' : ''
             }`}>
             {/* {segment} */}

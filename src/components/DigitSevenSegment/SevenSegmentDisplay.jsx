@@ -4,38 +4,47 @@ import SevenSegmentDigit from './SevenSegmentDigit';
 
 function SevenSegmentDisplay(props) {
   const [numArr, setNumArr] = React.useState(['0', '0', '0', '0']);
-  const millivolts = props.millivolts - 4;
+  const millivolts = props.millivolts - 4 || 0;
   const temperatura = convertMillivoltsToCelsius(millivolts);
-  const howManyBits = props.howManyBits;
+  const howManyBits = props.howManyBits || 0;
+  const displaySize = props.size;
 
+  // React.useEffect(() => {
+  //   let dotIndex;
+  //   if (temperatura?.includes('.')) {
+  //     dotIndex = temperatura.indexOf('.');
+  //   }
+  //   let result = temperatura.substring(0, dotIndex).split('');
+  //   if (howManyBits === 0) {
+  //     if (result.length < 4) {
+  //       while (result.length < 4) {
+  //         result.unshift('');
+  //       }
+  //       setNumArr(result);
+  //     }
+  //   } else {
+  //     result = replaceWithDot(result);
+  //     // Выводит числа полсе точки
+  //     const bits = getFractionalPart(temperatura).split('');
+  //     let ttt = [];
+  //     // console.log(result, bits, howManyBits);
+  //     ttt = formatData(result, bits, howManyBits);
+  //     setNumArr(ttt)
+  //     // console.log(ttt);
+  //   }
+  // }, [temperatura, howManyBits]);
   React.useEffect(() => {
-    // console.log(temperatura)
     let dotIndex;
-    if (temperatura?.includes('.')) {
-      dotIndex = temperatura.indexOf('.');
-    }
+    if (temperatura.includes('.')) dotIndex = temperatura.indexOf('.');
     let result = temperatura.substring(0, dotIndex).split('');
-    if (howManyBits === 0) {
-      if (result.length < 4) {
-        while (result.length < 4) {
-          result.unshift('');
-        }
-        setNumArr(result);
-      }
-    } else {
-      result = replaceWithDot(result);
-      // Выводит числа полсе точки
-      const bits = getFractionalPart(temperatura).split('');
-      let ttt = [];
-      // console.log(result, bits, howManyBits);
-      ttt = formatData(result, bits, howManyBits);
-      setNumArr(ttt)
-      // console.log(ttt);
-    }
+    result = replaceWithDot(result);
+    const bits = getFractionalPart(temperatura).split('');
+    let ttt = [];
+    ttt = formatData(result, bits, howManyBits);
+    setNumArr(ttt);
   }, [temperatura, howManyBits]);
 
   function formatData(arr, bits, howManyBits) {
-    // console.log(arr, bits, howManyBits);
     let newArr = [...arr];
     for (let i = 0; i < howManyBits; i++) {
       newArr.push(bits[i]);
@@ -59,13 +68,13 @@ function SevenSegmentDisplay(props) {
     return parts.length > 1 ? parts[1] : '';
   }
 
-  function addFloatAfterDot(arr, bits, howManyBits) {
-    let arrTemp = arr;
-    for (let i = 0; i < howManyBits; i++) {
-      arrTemp.push(bits[i]);
-    }
-    return arrTemp;
-  }
+  // function addFloatAfterDot(arr, bits, howManyBits) {
+  //   let arrTemp = arr;
+  //   for (let i = 0; i < howManyBits; i++) {
+  //     arrTemp.push(bits[i]);
+  //   }
+  //   return arrTemp;
+  // }
   function replaceWithDot(mass) {
     let arr = mass;
     const temp = arr[arr.length - 1];
@@ -73,19 +82,19 @@ function SevenSegmentDisplay(props) {
     return arr;
   }
 
-  function addZeroCounts(mass) {
-    let arr = mass;
-    const zeroCount = 4 - arr.length;
-    for (let i = 0; i < zeroCount; i++) {
-      arr.unshift('');
-    }
-    return arr;
-  }
+  // function addZeroCounts(mass) {
+  //   let arr = mass;
+  //   const zeroCount = 4 - arr.length;
+  //   for (let i = 0; i < zeroCount; i++) {
+  //     arr.unshift('');
+  //   }
+  //   return arr;
+  // }
 
   return (
-    <div className="display">
+    <div className={`display${displaySize === 'small' ? '-small' : ''}`}>
       {numArr.map((num, i) => {
-        return <SevenSegmentDigit key={i} value={num} />;
+        return <SevenSegmentDigit key={i} value={num} displaySize={displaySize} />;
       })}
     </div>
   );

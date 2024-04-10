@@ -1,8 +1,8 @@
 import React from 'react';
 import './style.scss';
 
-function Termopara({setMillivolts}) {
-  const [temperature, setTemperature] = React.useState('')
+function Termopara({ setMillivolts, setIsConnected, isConnected }) {
+  const [temperature, setTemperature] = React.useState('');
 
   const handleTemperatureChange = (event) => {
     const celsius = event.target.value;
@@ -11,10 +11,14 @@ function Termopara({setMillivolts}) {
     setMillivolts(convertCelsiusToMillivolts(celsius));
   };
 
+  const handleClickBtn = () => {
+    setIsConnected(!isConnected);
+  };
+
   // React.useEffect(() => {
   //   console.log('mV:', millivolts);
   // }, [millivolts])
-  
+
   const convertCelsiusToMillivolts = (cel) => {
     let celsius = Number(cel);
     let mV = 0;
@@ -38,6 +42,9 @@ function Termopara({setMillivolts}) {
         onChange={handleTemperatureChange}
         placeholder="Введите температуру"
       />
+      <button className="termopara-btn" onClick={() => handleClickBtn()}>
+        {isConnected ? 'Разорвать соединение' : 'Восстановаить соединение'}
+      </button>
     </div>
   );
 }

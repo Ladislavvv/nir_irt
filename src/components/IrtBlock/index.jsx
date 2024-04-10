@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './Irt.module.scss';
 import SevenSegmentDisplay from '../DigitSevenSegment/SevenSegmentDisplay';
-import {MillivoltsContext} from '../../App'
+import { MillivoltsContext } from '../../App';
 
-function Irt() {
+function Irt(props) {
   const [pressedKeys, setPressedKeys] = React.useState({});
-  const [howManyBits, setHowManyBits] = React.useState(1);
+  const [howManyBits, setHowManyBits] = React.useState(3);
 
   const millivolts = React.useContext(MillivoltsContext);
+  const isConnected = props.isConnected;
 
   const handleKeyDown = (event) => {
     setPressedKeys((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: true }));
@@ -32,12 +33,13 @@ function Irt() {
       // console.log('Нажата клавиша S')
       // Здесь можно вызвать функцию, которая должна выполниться при нажатии A
     } else if (pressedKeys['a'] || pressedKeys['ф']) {
-      setHowManyBits((howManyBits > 0) ? (howManyBits - 1) : 0)
+      setHowManyBits(howManyBits > 0 ? howManyBits - 1 : 0);
       // console.log('Нажата клавиша A');
       // Здесь можно вызвать функцию, которая должна выполниться при нажатии A
     } else if (pressedKeys['d'] || pressedKeys['в']) {
       // setHowManyBits((howManyBits < 3) ? (howManyBits + 1) : 3)
-      setHowManyBits(howManyBits + 1)
+      setHowManyBits(howManyBits < 3 ? howManyBits + 1 : 3);
+      // setHowManyBits(howManyBits + 1)
       // console.log('Нажата клавиша D');
       // Здесь можно вызвать функцию, которая должна выполниться при нажатии D
     } else if (pressedKeys['Enter']) {
@@ -46,10 +48,9 @@ function Irt() {
     }
   }, [pressedKeys]);
 
-  const handleClick = (event) => {
-    const id = event.currentTarget.id;
-    // console.log(id);
-  };
+  // const handleClick = (event) => {
+  //   const id = event.currentTarget.id;
+  // };
 
   return (
     <div className={styles.root}>
@@ -65,19 +66,24 @@ function Irt() {
             K3 <span className={styles.lamp}></span>
           </li>
         </ul>
-        <SevenSegmentDisplay millivolts={millivolts} howManyBits={howManyBits} />
-        {/* <div className={styles.main_ciferblat}>
-          <p>8888</p>
-        </div> */}
+        <SevenSegmentDisplay
+          millivolts={isConnected ? millivolts : 4}
+          howManyBits={howManyBits}
+          size="big"
+        />
       </div>
       <div className={styles.bottom}>
         <ul className={styles.wrapper}>
-          <div className={styles.second_ciferblat}>
-            <p>888.8</p>
-          </div>
+        <SevenSegmentDisplay
+          millivolts={isConnected ? millivolts : 4}
+          howManyBits={howManyBits}
+          size="small"
+        />
           <ul className={styles.button_list}>
             <li>
-              <button id="left-btn" onClick={handleClick} className={`${styles.button} ${
+              <button
+                id="left-btn"
+                className={`${styles.button} ${
                   pressedKeys['a'] || pressedKeys['ф'] || pressedKeys['s'] || pressedKeys['ы']
                     ? styles.active
                     : ''
@@ -95,7 +101,6 @@ function Irt() {
             <li>
               <button
                 id="right-btn"
-                onClick={handleClick}
                 className={`${styles.button} ${
                   pressedKeys['d'] || pressedKeys['в'] || pressedKeys['s'] || pressedKeys['ы']
                     ? styles.active
@@ -114,7 +119,6 @@ function Irt() {
             <li>
               <button
                 id="enter-btn"
-                onClick={handleClick}
                 className={`${styles.button} ${pressedKeys['enter'] ? styles.active : ''}`}>
                 <svg
                   width="48"
