@@ -2,22 +2,17 @@ import React from 'react';
 import styles from './Irt.module.scss';
 import SevenSegmentDisplay from '../DigitSevenSegment/SevenSegmentDisplay';
 import { MillivoltsContext } from '../../App';
-
 function Irt(props) {
   const [pressedKeys, setPressedKeys] = React.useState({});
   const [howManyBits, setHowManyBits] = React.useState(3);
-
   const millivolts = React.useContext(MillivoltsContext);
   const isConnected = props.isConnected;
-
   const handleKeyDown = (event) => {
     setPressedKeys((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: true }));
   };
-
   const handleKeyUp = (event) => {
     setPressedKeys((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: false }));
   };
-
   React.useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -27,7 +22,6 @@ function Irt(props) {
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
-
   React.useEffect(() => {
     if (pressedKeys['s'] || pressedKeys['ы']) {
       // console.log('Нажата клавиша S')
@@ -47,11 +41,9 @@ function Irt(props) {
       // Здесь можно вызвать функцию, которая должна выполниться при нажатии Enter
     }
   }, [pressedKeys]);
-
   // const handleClick = (event) => {
   //   const id = event.currentTarget.id;
   // };
-
   return (
     <div className={styles.root}>
       <div className={styles.top}>
@@ -138,5 +130,4 @@ function Irt(props) {
     </div>
   );
 }
-
 export default Irt;
