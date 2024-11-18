@@ -17,6 +17,37 @@
     overflow: hidden;
   }
 
+  &-graduation-buttons {
+    // position: absolute;
+    // left: 0;
+    // top: 80%;
+
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+    }
+
+    .graduation-btn {
+      padding: 10px;
+      border-radius: 10px;
+    // font-size: 18px;
+      // background-color: aqua;
+      // color: white;
+      // border: none;
+      cursor: pointer;
+
+      &.active {
+        background-color: aqua;
+      }
+    }
+  }
+
   &-btn{
     position: absolute;
     left: 0;

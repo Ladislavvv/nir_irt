@@ -33,7 +33,19 @@ function SevenSegmentDisplay(props) {
   //     // console.log(ttt);
   //   }
   // }, [temperatura, howManyBits]);
+
   React.useEffect(() => {
+    // const clampedTemperatura = Math.min(Number(temperatura), 600).toFixed(3);
+
+    // let dotIndex;
+    // if (clampedTemperatura.includes('.')) dotIndex = clampedTemperatura.indexOf('.');
+    // let result = clampedTemperatura.substring(0, dotIndex).split('');
+    // result = replaceWithDot(result);
+    // const bits = getFractionalPart(clampedTemperatura).split('');
+    // let ttt = [];
+    // ttt = formatData(result, bits, howManyBits);
+    // setNumArr(ttt);
+
     let dotIndex;
     if (temperatura.includes('.')) dotIndex = temperatura.indexOf('.');
     let result = temperatura.substring(0, dotIndex).split('');
@@ -59,8 +71,15 @@ function SevenSegmentDisplay(props) {
   function convertMillivoltsToCelsius(mv) {
     const mVoltRange = [4, 20];
     const celsiusRange = [0, 600];
+
+    let mvClamped = Math.min(Math.max(mv, mVoltRange[0]), mVoltRange[1]);
+
     const keff = celsiusRange[1] / (mVoltRange[1] - mVoltRange[0]);
-    return String((keff * mv).toFixed(3));
+    const output = String((keff * mv).toFixed(3));
+    if (output < 0) return String((0).toFixed(3))
+    if (output > 600) return String((600).toFixed(3))
+    return output
+    // return String((keff * (mvClamped - mVoltRange[0])).toFixed(3));
   }
 
   function getFractionalPart(str) {

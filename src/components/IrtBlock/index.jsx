@@ -2,17 +2,21 @@ import React from 'react';
 import styles from './Irt.module.scss';
 import SevenSegmentDisplay from '../DigitSevenSegment/SevenSegmentDisplay';
 import { MillivoltsContext } from '../../App';
+
 function Irt(props) {
   const [pressedKeys, setPressedKeys] = React.useState({});
   const [howManyBits, setHowManyBits] = React.useState(3);
   const millivolts = React.useContext(MillivoltsContext);
   const isConnected = props.isConnected;
+
   const handleKeyDown = (event) => {
     setPressedKeys((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: true }));
   };
+
   const handleKeyUp = (event) => {
     setPressedKeys((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: false }));
   };
+
   React.useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -22,25 +26,17 @@ function Irt(props) {
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
+
   React.useEffect(() => {
     if (pressedKeys['s'] || pressedKeys['ы']) {
-      // console.log('Нажата клавиша S')
-      // Здесь можно вызвать функцию, которая должна выполниться при нажатии A
     } else if (pressedKeys['a'] || pressedKeys['ф']) {
       setHowManyBits(howManyBits > 0 ? howManyBits - 1 : 0);
-      // console.log('Нажата клавиша A');
-      // Здесь можно вызвать функцию, которая должна выполниться при нажатии A
     } else if (pressedKeys['d'] || pressedKeys['в']) {
-      // setHowManyBits((howManyBits < 3) ? (howManyBits + 1) : 3)
       setHowManyBits(howManyBits < 3 ? howManyBits + 1 : 3);
-      // setHowManyBits(howManyBits + 1)
-      // console.log('Нажата клавиша D');
-      // Здесь можно вызвать функцию, которая должна выполниться при нажатии D
     } else if (pressedKeys['Enter']) {
-      // console.log('Нажата клавиша Enter');
-      // Здесь можно вызвать функцию, которая должна выполниться при нажатии Enter
     }
   }, [pressedKeys]);
+
   // const handleClick = (event) => {
   //   const id = event.currentTarget.id;
   // };
@@ -66,11 +62,11 @@ function Irt(props) {
       </div>
       <div className={styles.bottom}>
         <ul className={styles.wrapper}>
-        <SevenSegmentDisplay
-          millivolts={isConnected ? millivolts : 4}
-          howManyBits={howManyBits}
-          size="small"
-        />
+          <SevenSegmentDisplay
+            millivolts={isConnected ? millivolts : 4}
+            howManyBits={howManyBits}
+            size="small"
+          />
           <ul className={styles.button_list}>
             <li>
               <button
