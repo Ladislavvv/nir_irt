@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './Irt.module.scss';
 import SevenSegmentDisplay from '../DigitSevenSegment/SevenSegmentDisplay';
-import { MillivoltsContext } from '../../App';
+import { MilliAmpersContext } from '../../App';
 
-function Irt(props) {
+function Irt({ isConnected, TermoparaTypes }) {
   const [pressedKeys, setPressedKeys] = React.useState({});
   const [howManyBits, setHowManyBits] = React.useState(3);
-  const millivolts = React.useContext(MillivoltsContext);
-  const isConnected = props.isConnected;
+  const [curGrad, setCurGrad] = React.useState('HA');
+
+  const milliAmpers = React.useContext(MilliAmpersContext);
+
 
   const handleKeyDown = (event) => {
     setPressedKeys((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: true }));
@@ -37,9 +39,11 @@ function Irt(props) {
     }
   }, [pressedKeys]);
 
-  // const handleClick = (event) => {
-  //   const id = event.currentTarget.id;
-  // };
+
+  const handleGraduationChange = (newGraduation) => {
+    setCurGrad(newGraduation);
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.top}>
@@ -55,27 +59,28 @@ function Irt(props) {
           </li>
         </ul>
         <SevenSegmentDisplay
-          millivolts={isConnected ? millivolts : 4}
+          milliAmpers={isConnected ? milliAmpers : 4}
           howManyBits={howManyBits}
+          curGrad={curGrad}
           size="big"
         />
       </div>
       <div className={styles.bottom}>
         <ul className={styles.wrapper}>
           <SevenSegmentDisplay
-            millivolts={isConnected ? millivolts : 4}
+            milliAmpers={isConnected ? milliAmpers : 4}
             howManyBits={howManyBits}
+            curGrad={curGrad}
             size="small"
           />
           <ul className={styles.button_list}>
             <li>
               <button
                 id="left-btn"
-                className={`${styles.button} ${
-                  pressedKeys['a'] || pressedKeys['ф'] || pressedKeys['s'] || pressedKeys['ы']
-                    ? styles.active
-                    : ''
-                }`}>
+                className={`${styles.button} ${pressedKeys['a'] || pressedKeys['ф'] || pressedKeys['s'] || pressedKeys['ы']
+                  ? styles.active
+                  : ''
+                  }`}>
                 <svg
                   width="40"
                   height="36"
@@ -89,11 +94,10 @@ function Irt(props) {
             <li>
               <button
                 id="right-btn"
-                className={`${styles.button} ${
-                  pressedKeys['d'] || pressedKeys['в'] || pressedKeys['s'] || pressedKeys['ы']
-                    ? styles.active
-                    : ''
-                }`}>
+                className={`${styles.button} ${pressedKeys['d'] || pressedKeys['в'] || pressedKeys['s'] || pressedKeys['ы']
+                  ? styles.active
+                  : ''
+                  }`}>
                 <svg
                   width="40"
                   height="36"
@@ -122,6 +126,16 @@ function Irt(props) {
             </li>
           </ul>
         </ul>
+        <div className={styles.graduation_buttons}>
+          {TermoparaTypes && TermoparaTypes.map((grad) => (
+            <button
+              key={grad.name}
+              className={`${styles.graduation_btn} ${curGrad === grad.name ? styles.active : ''}`}
+              onClick={() => handleGraduationChange(grad.name)}>
+              {grad.name}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

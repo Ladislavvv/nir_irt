@@ -5,32 +5,32 @@ import './scss/app.scss';
 import IrtBLock from './components/IrtBlock';
 import SideBar from './components/sideBarBlock';
 import Termopara from './components/Termopara/';
+import { TermoparaTypes } from './data/data';
 
-export const MillivoltsContext = React.createContext();
+export const MilliAmpersContext = React.createContext();
 
 function App() {
-  const [millivolts, setMillivolts] = React.useState(4);
+  const [milliAmpers, setMilliAmpers] = React.useState(4);
   const [isConnected, setIsConnected] = React.useState(true);
-  const [gradType, setGradType] = React.useState();
-
-  // React.useEffect(() => {
-  //   console.log('App.js:mV=', millivolts);
-  // }, [millivolts]);
 
   return (
-    <MillivoltsContext.Provider value={millivolts}>
+    <MilliAmpersContext.Provider value={milliAmpers}>
       <div className="App">
         <div className="wrapper">
           <SideBar />
-          <IrtBLock isConnected={isConnected} />
+          <IrtBLock
+          isConnected={isConnected}
+          TermoparaTypes={TermoparaTypes}
+          />
           <Termopara
-            setMillivolts={setMillivolts}
+            setMilliAmpers={setMilliAmpers}
             isConnected={isConnected}
             setIsConnected={setIsConnected}
+            TermoparaTypes={TermoparaTypes}
           />
         </div>
       </div>
-    </MillivoltsContext.Provider>
+    </MilliAmpersContext.Provider>
   );
 }
 

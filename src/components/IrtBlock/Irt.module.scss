@@ -115,4 +115,23 @@
       }
     }
   }
+
+  .graduation_buttons{
+    position: absolute;
+    right: 50px;
+    bottom: 0;
+    display: flex;
+    gap: 85px;
+    margin-bottom: 15px;
+
+    .graduation_btn {
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+
+      &.active {
+        background-color: aqua;
+      }
+    }
+  }
 }
